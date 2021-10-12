@@ -10,6 +10,7 @@
       name: student{{ item }}
       ansible_host: student{{ item }}.{{ lab_domain }}
       ansible_user: student{{ item }}
+      ansible_ssh_pass: "{{ lab_password }}"
       groups:
         - lab_environments
     loop: "{{ range(1, students + 1)| list }}"
@@ -17,7 +18,6 @@
 - name: check progress on workshops and build report
   hosts: lab_environments
   vars:
-    ansible_pass: "{{ lab_password }}"
     labs:
       - {"exercise": "exercise_3", "file_to_check": "apache.yml"}
       - {"exercise": "exercise_4", "file_to_check": "deploy_index_html.yml"}

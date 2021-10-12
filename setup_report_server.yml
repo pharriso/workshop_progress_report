@@ -9,6 +9,7 @@
       name: "{{ trainer }}"
       ansible_host: "{{ trainer }}.{{ lab_domain }}"
       ansible_user: "{{ trainer }}"
+      ansible_ssh_pass: "{{ lab_password }}"
 
 - name: setup progress report server
   hosts: all
@@ -18,7 +19,7 @@
       repo: https://github.com/pharriso/workshop_progress_report.git
       dest: /home/{{ ansible_user }}/workshop_progress_report
 
-  - name: setup cron jon
+  - name: setup cron job
     cron:
       name: "check dirs"
       minute: "*/5"
