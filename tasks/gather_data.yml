@@ -12,5 +12,5 @@
 
 - name: set lab status to fail if file doesn't exist
   set_fact:
-    "{{ item.exercise }}": "FAIL"
+    "{{ item.exercise }}": ""
   when: not lab.stat.exists
