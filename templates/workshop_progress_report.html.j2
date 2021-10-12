@@ -9,10 +9,8 @@
     <thead>
         <tr>
             <th>student</th>
-            <th>exercise 3</th>
-            <th>exercise 4</th>
-            <th>exercise 5</th>
-            <th>exercise 6</th>
+	    {% for exercises in labs  %}
+	    <th>{{ exercises.exercise }}</th>
         </tr>
     </thead>
     <tbody>
