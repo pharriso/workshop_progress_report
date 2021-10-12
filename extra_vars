@@ -1,0 +1,10 @@
+# lab environment being used for rocketchat where we will host our web report
+trainer: student1
+
+# number of students attending
+students: 
+# domain spun up by labs e.g. abcd.example.opentlc.com
+lab_domain: 
+# lab password
+lab_password: 
+

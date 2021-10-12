@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="css/main.css">
+  <h1><center><font color="white">Ansible Workshop Progress - {{ ansible_date_time.time }}</font></center></h1>
+</head>
+<body>
+<table>
+    <thead>
+        <tr>
+            <th>student</th>
+            <th>exercise 3</th>
+            <th>exercise 4</th>
+            <th>exercise 5</th>
+            <th>exercise 6</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for host in groups['all']  %}
+        <tr>
+            <td>{{ hostvars[host].inventory_hostname }}</td>
+	    {% for exercises in labs  %}
+	    <td>{{ hostvars[host][exercises.exercise] }}</td>
+            {% endfor %}
+        </tr>
+{% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>

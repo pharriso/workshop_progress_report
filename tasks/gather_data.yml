@@ -1,0 +1,16 @@
+---
+
+- name: check {{ item.exercise }}
+  stat:
+    path: /home/{{ ansible_user }}/ansible-files/{{ item.file_to_check }}
+  register: lab
+
+- name: set lab status to ok if file exists
+  set_fact:
+    "{{ item.exercise }}": "OK"
+  when: lab.stat.exists
+
+- name: set lab status to fail if file doesn't exist
+  set_fact:
+    "{{ item.exercise }}": "FAIL"
+  when: not lab.stat.exists

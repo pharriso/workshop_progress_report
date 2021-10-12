@@ -1,0 +1,45 @@
+---
+
+- name: build inventory to check workshops
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+  - name: add student servers
+    add_host:
+      name: student{{ item }}
+      ansible_host: student{{ item }}.{{ lab_domain }}
+      ansible_user: student{{ item }}
+      groups:
+        - students
+    loop: "{{ range(1, students + 1)| list }}"
+
+- name: check progress on workshops and build report
+  hosts: all
+  vars:
+    labs:
+      - {"exercise": "exercise_3", "file_to_check": "apache.yml"}
+      - {"exercise": "exercise_4", "file_to_check": "deploy_index_html.yml"}
+      - {"exercise": "exercise_5", "file_to_check": "ftpserver.yml"}
+      - {"exercise": "exercise_6", "file_to_check": "motd-facts.yml"}
+  tasks:
+  - name: check labs
+    include_tasks:
+      file: tasks/gather_data.yml
+    loop: "{{ labs }}"
+      
+  - name: copy over css files
+    copy: 
+      src: files/css
+      dest: /usr/share/nginx/html/css
+      remote_src: true
+    delegate_to: localhost
+    run_once: true
+
+  - name: template out report
+    template:
+      src: workshop_progress_report.html.j2
+      dest: /usr/share/nginx/html/workshop_progress_report.html.j2
+      remote_src: true
+    delegate_to: localhost
+    run_once: true
