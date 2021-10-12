@@ -1,7 +1,9 @@
 Report progress on Ansible Workshops
 =========
 
-Sets up a cron job that runs every 5 minutes to work out how far students have got in their exercises. Note some flaws:
+Sets up a cron job that runs every 5 minutes to work out how far students have got in their exercises. Report is available via the webserver. 
+
+Note some flaws:
 
 * relies on students creating playbooks with correct names
 * only works for rhel workshop at the moment
