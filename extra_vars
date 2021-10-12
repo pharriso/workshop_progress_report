@@ -2,9 +2,8 @@
 trainer: student1
 
 # number of students attending
-students: 
+students:
 # domain spun up by labs e.g. abcd.example.opentlc.com
-lab_domain: 
+lab_domain:
 # lab password
-lab_password: 
-
+lab_password:

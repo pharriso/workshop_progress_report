@@ -1,0 +1,31 @@
+---
+
+- name: add host to play
+  hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: add control host
+    add_host:
+      name: "{{ trainer }}"
+      ansible_host: "{{ trainer }}.{{ lab_domain }}"
+      ansible_user: "{{ trainer }}"
+
+- name: setup progress report server
+  hosts: all
+  tasks:
+  - name: clone down the git repo
+    git:
+      repo: https://github.com/pharriso/workshop_progress_report.git
+      dest: /home/{{ ansible_user }}/workshop_progress_report
+
+  - name: setup cron jon
+    cron:
+      name: "check dirs"
+      minute: "*/5"
+      hour: "*"
+      job: "ansible-playbook /home/{{ ansible_user }}/workshop_progress_report/workshop_progress_report.yml -e @extra_vars  > /dev/null"
+
+  - name: copy over vars file
+    copy:
+      src: extra_vars
+      dest: /home/{{ ansible_user }}/workshop_progress_report/extra_vars

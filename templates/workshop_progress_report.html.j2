@@ -16,7 +16,7 @@
         </tr>
     </thead>
     <tbody>
-{% for host in groups['all']  %}
+{% for host in groups['lab_environments']  %}
         <tr>
             <td>{{ hostvars[host].inventory_hostname }}</td>
 	    {% for exercises in labs  %}

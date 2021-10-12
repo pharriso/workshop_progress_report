@@ -11,12 +11,13 @@
       ansible_host: student{{ item }}.{{ lab_domain }}
       ansible_user: student{{ item }}
       groups:
-        - students
+        - lab_environments
     loop: "{{ range(1, students + 1)| list }}"
 
 - name: check progress on workshops and build report
-  hosts: all
+  hosts: lab_environments
   vars:
+    ansible_pass: "{{ lab_password }}"
     labs:
       - {"exercise": "exercise_3", "file_to_check": "apache.yml"}
       - {"exercise": "exercise_4", "file_to_check": "deploy_index_html.yml"}
@@ -34,12 +35,20 @@
       dest: /usr/share/nginx/html/css
       remote_src: true
     delegate_to: localhost
+    become: true
     run_once: true
 
   - name: template out report
     template:
       src: workshop_progress_report.html.j2
-      dest: /usr/share/nginx/html/workshop_progress_report.html.j2
+      dest: /usr/share/nginx/html/workshop_progress_report.html
       remote_src: true
     delegate_to: localhost
+    become: true
     run_once: true
+
+  - name: print report url
+    debug:
+      msg: http://{{ trainer}}.{{ lab_domain}}/workshop_progress_report.html
+    run_once: true
+    delegate_to: localhost
