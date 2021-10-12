@@ -18,15 +18,27 @@
     git:
       repo: https://github.com/pharriso/workshop_progress_report.git
       dest: /home/{{ ansible_user }}/workshop_progress_report
+      force: yes
 
   - name: setup cron job
     cron:
       name: "check dirs"
       minute: "*/5"
       hour: "*"
-      job: "ansible-playbook /home/{{ ansible_user }}/workshop_progress_report/workshop_progress_report.yml -e @extra_vars  > /dev/null"
+      job: "ansible-playbook /home/{{ ansible_user }}/workshop_progress_report/workshop_progress_report.yml -e @/home/{{ ansible_user }}/workshop_progress_report/extra_vars  > /dev/null"
 
   - name: copy over vars file
     copy:
       src: extra_vars
       dest: /home/{{ ansible_user }}/workshop_progress_report/extra_vars
+
+  - name: run report
+    shell: | 
+      cd /home/{{ ansible_user }}/workshop_progress_report/
+      ansible-playbook workshop_progress_report.yml -e @extra_vars
+
+  - name: print report url
+    debug:
+      msg: http://{{ trainer}}.{{ lab_domain}}/workshop_progress_report.html
+    run_once: true
+    delegate_to: localhost

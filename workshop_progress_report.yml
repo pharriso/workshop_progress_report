@@ -19,10 +19,11 @@
   hosts: lab_environments
   vars:
     labs:
-      - {"exercise": "exercise_3", "file_to_check": "apache.yml"}
-      - {"exercise": "exercise_4", "file_to_check": "deploy_index_html.yml"}
-      - {"exercise": "exercise_5", "file_to_check": "ftpserver.yml"}
-      - {"exercise": "exercise_6", "file_to_check": "motd-facts.yml"}
+      - {"exercise": "exercise_1.3", "file_to_check": "apache.yml"}
+      - {"exercise": "exercise_1.4", "file_to_check": "deploy_index_html.yml"}
+      - {"exercise": "exercise_1.5", "file_to_check": "ftpserver.yml"}
+      - {"exercise": "exercise_1.6", "file_to_check": "motd-facts.yml"}
+      - {"exercise": "exercise_1.7", "file_to_check": "test_apache_role.yml"}
   tasks:
   - name: check labs
     include_tasks:
