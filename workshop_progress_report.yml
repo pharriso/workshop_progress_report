@@ -13,7 +13,7 @@
       ansible_ssh_pass: "{{ lab_password }}"
       groups:
         - lab_environments
-    loop: "{{ range(1, students + 1)| list }}"
+    loop: "{{ range(2, students + 1)| list }}"
 
 - name: check progress on workshops and build report
   hosts: lab_environments
