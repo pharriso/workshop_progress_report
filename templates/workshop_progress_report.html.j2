@@ -19,7 +19,7 @@
         <tr>
             <td>{{ hostvars[host].inventory_hostname }}</td>
 	    {% for exercises in labs  %}
-	    <td>{{ hostvars[host][exercises.exercise] }}</td>
+	    <td>{{ hostvars[host][exercises.exercise] | default('unavailable') }}</td>
             {% endfor %}
         </tr>
 {% endfor %}
