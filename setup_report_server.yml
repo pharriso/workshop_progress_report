@@ -14,6 +14,9 @@
 - name: setup progress report server
   hosts: all
   tasks:
+  - name: install awx.awx collection
+    shell: ansible-galaxy collection install awx.awx:19.0.0
+
   - name: clone down the git repo
     git:
       repo: https://github.com/pharriso/workshop_progress_report.git
@@ -36,6 +39,7 @@
     shell: | 
       cd /home/{{ ansible_user }}/workshop_progress_report/
       ansible-playbook workshop_progress_report.yml -e @extra_vars
+    ignore_errors: true
 
   - name: print report url
     debug:
