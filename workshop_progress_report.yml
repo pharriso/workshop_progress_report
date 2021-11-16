@@ -33,7 +33,7 @@
   - name: copy over css files
     copy: 
       src: files/css
-      dest: /usr/share/nginx/html/css
+      dest: /usr/share/nginx/html/
       remote_src: true
     delegate_to: localhost
     become: true
