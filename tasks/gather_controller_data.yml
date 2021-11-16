@@ -1,0 +1,21 @@
+---
+
+- name: check controller {{ item.exercise }}
+  awx.awx.tower_job_list:
+    tower_username: admin
+    tower_password: "{{ lab_password }}"
+    tower_host: "{{ ansible_host }}"
+    validate_certs: false
+    query: {"playbook": "{{ item.file_to_check }}"}
+  register: lab
+  delegate_to: localhost
+
+- name: set lab status to ok if playbook has been run
+  set_fact:
+    "{{ item.exercise }}": "OK"
+  when: lab.count >= 1
+
+- name: set lab status to fail if playbook hasn't been run
+  set_fact:
+    "{{ item.exercise }}": ""
+  when: lab.count == 0

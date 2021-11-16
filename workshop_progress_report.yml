@@ -24,16 +24,27 @@
       - {"exercise": "exercise1_5", "file_to_check": "ftpserver.yml"}
       - {"exercise": "exercise1_6", "file_to_check": "motd-facts.yml"}
       - {"exercise": "exercise1_7", "file_to_check": "test_apache_role.yml"}
+      - {"exercise": "exercise2_3", "file_to_check": "rhel/apache/apache_install.yml", "controller": true}
+      - {"exercise": "exercise2_4", "file_to_check": "rhel/apache/apache_role_install.yml", "controller": true}
+      - {"exercise": "exercise2_6", "file_to_check": "rhel/webops/web_infrastructure.yml", "controller": true}
+      - {"exercise": "exercise2_7", "file_to_check": "rhel/apache/webcontent.yml", "controller": true}
   tasks:
-  - name: check labs
+  - name: check cli labs
     include_tasks:
-      file: tasks/gather_data.yml
+      file: tasks/gather_cli_data.yml
     loop: "{{ labs }}"
-      
+    when: item.controller is not defined
+
+  - name: check controller labs
+    include_tasks:
+      file: tasks/gather_controller_data.yml
+    loop: "{{ labs }}"
+    when: item.controller is defined
+
   - name: copy over css files
     copy: 
       src: files/css
-      dest: /usr/share/nginx/html/
+      dest: /tmp/
       remote_src: true
     delegate_to: localhost
     become: true
@@ -42,7 +53,7 @@
   - name: template out report
     template:
       src: workshop_progress_report.html.j2
-      dest: /usr/share/nginx/html/workshop_progress_report.html
+      dest: /tmp/workshop_progress_report.html
       remote_src: true
     delegate_to: localhost
     become: true
