@@ -44,7 +44,7 @@
   - name: copy over css files
     copy: 
       src: files/css
-      dest: /tmp/
+      dest: /usr/share/nginx/html/
       remote_src: true
     delegate_to: localhost
     become: true
@@ -53,7 +53,7 @@
   - name: template out report
     template:
       src: workshop_progress_report.html.j2
-      dest: /tmp/workshop_progress_report.html
+      dest: /usr/share/nginx/html/workshop_progress_report.html
       remote_src: true
     delegate_to: localhost
     become: true
