@@ -29,10 +29,6 @@
       - {"exercise": "exercise2_6", "file_to_check": "rhel/webops/web_infrastructure.yml", "controller": true}
       - {"exercise": "exercise2_7", "file_to_check": "rhel/apache/webcontent.yml", "controller": true}
   tasks:
-  - name: install awx.awx collection
-    shell: ansible-galaxy install awx.awx:19.0.0
-    delegate_to: localhost
-
   - name: check cli labs
     include_tasks:
       file: tasks/gather_cli_data.yml
