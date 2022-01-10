@@ -38,10 +38,10 @@
       dest: /home/{{ ansible_user }}/workshop_progress_report/extra_vars
 
   - name: run report
-    shell: | 
-      cd /home/{{ ansible_user }}/workshop_progress_report/
-      ansible-playbook workshop_progress_report.yml -e @extra_vars
+    shell: |
+      ansible-playbook /home/{{ ansible_user }}/workshop_progress_report/workshop_progress_report.yml -e @/home/{{ ansible_user }}/workshop_progress_report/extra_vars
     ignore_errors: true
+
 
   - name: print report url
     debug:
