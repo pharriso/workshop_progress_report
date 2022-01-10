@@ -15,7 +15,9 @@
   hosts: all
   tasks:
   - name: install awx.awx collection
-    shell: ansible-galaxy collection install awx.awx:19.0.0
+    shell: |
+     ansible-galaxy collection install awx.awx:19.0.0
+     ansible-galaxy collection install community.general
 
   - name: clone down the git repo
     git:
