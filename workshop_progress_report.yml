@@ -9,7 +9,7 @@
     add_host:
       name: student{{ item }}
       ansible_host: student{{ item }}.{{ lab_domain }}
-      ansible_user: student{{ item }}
+      ansible_user: student
       ansible_ssh_pass: "{{ lab_password }}"
       groups:
         - lab_environments
